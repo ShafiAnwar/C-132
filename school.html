@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
+  
+    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+</head>
+<style>
+    *{
+    margin: 0;
+    padding: 0;
+}
+canvas{
+    border: 3px solid darksalmon;
+  
+    box-shadow: 10px 10px 10px gray;
+    margin: 60px;
+
+   
+}
+#status
+{
+font-size: 23px;
+letter-spacing: 2px;
+}
+.btn btn-warnig .heading,.btn btn-success{
+font-size: 56px;
+font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+font-weight: bold;
+}
+#heading{
+    font-size: 56px;
+font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
+font-weight: bold;
+width: 100%;
+}
+a{
+    text-decoration: none;
+color: aliceblue;
+font-size: 22px;
+width: 10%;
+font-weight: bold;
+font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+background-color:transparent;
+border: 2px solid white;
+float: right;
+padding: 13px;
+}
+
+</style>
+<body>
+    <body background="backgorund.gif">
+        <center>
+            <p class="btn btn-warning heading" id="heading">Object Detection</p>
+           <br>
+           <br>
+           <h3 class="btn btn-success" id="status"></h3>
+    
+           <a href="index.html" class="btn-1">back</a>
+    </center>       
+    
+        
+    </body>
+    <script>
+    img="";
+    status="";
+    function preload(){
+        img=loadImage("school.jpg");
+    }
+    function setup(){
+        canvas=createCanvas(640,420);
+        canvas.center();
+        objectDetector=ml5.objectDetector('cocossd',ModelLoaded);
+        document.getElementById("status").innerHTML="Status:Detecting Objects:";
+    }
+    function draw(){
+        image(img,0,0,640,420);
+        fill("red");
+        text("SCHOOL",45,75);
+        noFill();
+        stroke("red");
+        rect(30,40,450,370);
+    }
+    function ModelLoaded(){
+        console.log("Model Loaded");
+        status=true;
+        objectDetector.detect(img,gotResult);
+    }
+    function gotResult(error,result){
+        if(error){
+            console.error(error);
+        }
+            else{
+                console.log(result);
+            }
+    }</script>
+</body>
+</html>
